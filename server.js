@@ -1,10 +1,10 @@
 var express = require('express');
-var	bodyParser = require('body-parser');
-var	config = require('./config/config');
+var bodyParser = require('body-parser');
+var config = require('./config/config');
 var expressJWT = require('express-jwt');
 var routes = require('./api/routes');
 
-var	app = express();
+var app = express();
 
 var cors = function(req, res, next) {
   res.header('Access-Control-Allow-Origin', config.client);
@@ -15,7 +15,7 @@ var cors = function(req, res, next) {
 }
 
 app.use(bodyParser.urlencoded({
-	"extended": false
+  "extended": false
 }));
 app.use(expressJWT({ secret: config.secret })
   .unless({ path: ['/login', '/register'] })
