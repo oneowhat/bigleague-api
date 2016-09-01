@@ -6,7 +6,7 @@ var	schedule = require('./schedule');
 exports.init = function(app) {
 
   // campaigns
-  app.get('/api/campaigns/:coach', campaigns.byUser);
+  app.get('/api/campaigns/:userId', campaigns.byUser);
   app.get('/api/campaign/:title', campaigns.byTitle);
   app.put('/api/campaigns', campaigns.update);
   app.post('/api/campaigns', campaigns.insert);

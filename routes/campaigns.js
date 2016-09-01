@@ -3,7 +3,7 @@ var models = require('../models');
 exports.byUser = function(req, res, next) {
 	models.campaign.findAll({
 		where: {
-			longshanksId: req.params.userId
+			userId: req.params.userId
 		}
 	}).then(function(campaigns){
 		res.json(campaigns.map(function(item) {

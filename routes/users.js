@@ -39,8 +39,16 @@ exports.login = function(req, res, next) {
     .findOne({ where: { email: attempt.email } })
     .then(function(user){
       if(user && checkPassword(user, attempt.password)) {
-        var token = jwt.sign({ username: attempt.email }, config.secret)
-        res.status(200).json({ token: token, user: user });
+        var token = jwt.sign({ username: attempt.email }, config.secret);
+        res.status(200).json({
+          token: token,
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            admin: user.admin
+          }
+        });
       } else {
         res.status(401).send('Invalid username/password');
       }
