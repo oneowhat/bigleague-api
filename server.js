@@ -1,8 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var config = require('./config/config');
+var env = process.env.NODE_ENV || "development";
+var config = require('./config/config')[env];
 var expressJWT = require('express-jwt');
-var routes = require('./api/routes');
+var routes = require('./routes/routes');
+var models = require("./models");
 
 var app = express();
 
@@ -26,4 +28,6 @@ app.use(express.static(__dirname + '/public'));
 
 routes.init(app);
 
-app.listen(process.env.PORT || 3000);
+models.sequelize.sync().then(function() {
+  app.listen(process.env.PORT || 3000);
+});

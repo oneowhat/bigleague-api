@@ -1,5 +1,7 @@
 "use strict";
 
+var Sequelize = require("sequelize");
+
 module.exports = function(sequelize, DataTypes) {
   var Campaign = sequelize.define('campaign', {
     id: {
@@ -22,8 +24,9 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Campaign.belongsTo(models.User);
-        Campaign.hasMany(models.Coach);
+        Campaign.belongsTo(models.user);
+        Campaign.hasMany(models.coach);
+        Campaign.hasMany(models.match);
       }
     }
   });

@@ -1,5 +1,7 @@
 "use strict";
 
+var Sequelize = require("sequelize");
+
 module.exports = function(sequelize, DataTypes) {
   var Coach = sequelize.define('coach', {
     id: {
@@ -28,12 +30,12 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
-        Coach.belongsTo(models.Campaign);
-        Coach.hasMany(models.Match, { as: 'homeCoach', foreignKey: 'homeCoachId' });
-        Coach.hasMany(models.Match, { as: 'awayCoach', foreignKey: 'awayCoachId' });
+        Coach.belongsTo(models.campaign);
+        Coach.hasMany(models.match, { as: 'homeCoach', foreignKey: 'homeCoachId' });
+        Coach.hasMany(models.match, { as: 'awayCoach', foreignKey: 'awayCoachId' });
       }
     }
   });
 
-  return User;
+  return Coach;
 }

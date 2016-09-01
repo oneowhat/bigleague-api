@@ -1,27 +1,33 @@
 var models = require('../models');
 
 exports.byUser = function(req, res, next) {
-	models.Campaign.findAll({
+	models.campaign.findAll({
 		where: {
 			longshanksId: req.params.userId
 		}
-	}).then(function(campaign){
-		res.json(campaigns);
+	}).then(function(campaigns){
+		res.json(campaigns.map(function(item) {
+			return item.get({ plain: true });
+		}));
 	});
 };
 
 exports.byTitle = function(req, res, next) {
-	models.Campaign.findOne({
+	models.campaign.findOne({
 		where: {
 			title: req.params.title
-		}
+		},
+		include: [
+			{ model: Match },
+			{ model: Coach }
+		]
 	}).then(function(campaign){
-		res.json(campaign);
+		res.json(campaign.get({ plain: true }));
 	});
 };
 
 exports.insert = function(req, res, next) {
-	models.Campaign
+	models.campaign
 		.build(req.body)
 		.save()
 		.then(function(campaign) {
@@ -34,16 +40,18 @@ exports.insert = function(req, res, next) {
 
 exports.update = function(req, res, next) {
   var request = req.body;
-	models.Campaign
-		.findById(request.id)
+	models.campaign
+		.update({
+			title: request.title,
+			location: request.location,
+			passphrase: request.passphrase
+		}, {
+			where: { id: request.id }
+		})
 		.then(function (campaign) {
-			campaign.update({
-        title: request.title,
-        location: request.location,
-        passphrase: request.passphrase
-			})
-			.then(function() {
-	    	res.status(200).send({ success: true });
-			});
+    	res.status(200).send({ success: true });
+		})
+		.catch(function(err){
+			return next(err);
 		});
 };

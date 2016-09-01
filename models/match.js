@@ -1,5 +1,7 @@
 "use strict";
 
+var Sequelize = require("sequelize");
+
 module.exports = function(sequelize, DataTypes) {
   var Match = sequelize.define('match', {
     id: {
@@ -15,14 +17,19 @@ module.exports = function(sequelize, DataTypes) {
     },
     awayScore: {
       type: Sequelize.INTEGER
+    },
+    reported: {
+      type: Sequelize.DATE,
+      allowNull: true
     }
   }, {
     classMethods: {
       associate: function(models) {
-        Match.balongsTo(models.Coach);
+        Match.belongsTo(models.coach);
+        Match.belongsTo(models.campaign);
       }
     }
   });
 
-  return User;
+  return Match;
 }
