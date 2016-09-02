@@ -8,28 +8,40 @@ exports.create = function(req, res, next) {
 	models.coach
 		.findAll({ where: { campaignId: req.body.campaign }})
 		.then(function(coaches) {
-      var matches = generateSchedule(campaignId, coaches);
-      matches.forEach(function(match) {
-        var result = insertMatch(match, next);
+      var rounds = generateSchedule(campaignId, coaches);
+      rounds.forEach(function(round) {
+        insertRound(round, next);
       });
       res.status(201).json({ success: true });
     });
 }
 
-function insertMatch(match, next) {
-  models.match
-    .build(match)
+function insertRound(round, next) {
+  return models.round
+    .build(round)
     .save()
-    .then(function(newMatch) {
-      return newMatch;
-    })
-    .catch(function(err) {
-      return err;
+    .then(function(newRound) {
+      if(newRound) {
+        newRound.matches = [];
+        round.matches.forEach(function(match) {
+          match.roundId = newRound.id;
+          models.match
+            .build(match)
+            .save()
+            .then(function (newMatch) {
+              return true;
+            });
+        });
+      }
     });
 }
 
+function insertMatches(round, matches) {
+
+}
+
 function generateSchedule(campaignId, coaches) {
-  var matches = [];
+  var rounds = [];
   var n = coaches.length;
   var pairs = [];
 
@@ -42,23 +54,34 @@ function generateSchedule(campaignId, coaches) {
     n += 1;
   }
   for (var j = 0; j < n - 1; j += 1) {
+    var round = {
+      campaignId: campaignId,
+      roundNumber: j,
+      matches: []
+    };
     for (var i = 0; i < n / 2; i += 1) {
       if (pairs[i] !== DUMMY && pairs[n - 1 - i] !== DUMMY) {
-        matches.push(newMatch(pairs[i], pairs[n - 1 - i], j), campaignId);
+        if(j % 2 === 0) {
+          round.matches.push(newMatch(pairs[i], pairs[n - 1 - i], campaignId));
+        } else {
+          round.matches.push(newMatch(pairs[n - 1 - i], pairs[i], campaignId));
+        }
       }
     }
+    rounds.push(round);
     pairs.splice(1, 0, pairs.pop()); // permutate for next round
   }
 
   return rounds;
 }
 
-function newMatch(coachOne, coachTwo, round, campaignId) {
+function newMatch(coachOne, coachTwo, campaignId) {
   return {
+    campaignId: campaignId,
     homeCoachId: coachOne,
     awayCoachId: coachTwo,
     homeScore: 0,
     awayScore: 0,
-    round: round
+    roundId: 0
   };
 }

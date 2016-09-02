@@ -26,7 +26,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         Campaign.belongsTo(models.user);
         Campaign.hasMany(models.coach);
-        Campaign.hasMany(models.match);
+        Campaign.hasMany(models.round);
       }
     }
   });

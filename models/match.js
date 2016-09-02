@@ -9,16 +9,13 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    round: {
-      type: Sequelize.INTEGER
-    },
     homeScore: {
       type: Sequelize.INTEGER
     },
     awayScore: {
       type: Sequelize.INTEGER
     },
-    reported: {
+    reportedAt: {
       type: Sequelize.DATE,
       allowNull: true
     }
@@ -26,7 +23,7 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Match.belongsTo(models.coach);
-        Match.belongsTo(models.campaign);
+        Match.belongsTo(models.round);
       }
     }
   });

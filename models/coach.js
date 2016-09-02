@@ -33,6 +33,7 @@ module.exports = function(sequelize, DataTypes) {
         Coach.belongsTo(models.campaign);
         Coach.hasMany(models.match, { as: 'homeCoach', foreignKey: 'homeCoachId' });
         Coach.hasMany(models.match, { as: 'awayCoach', foreignKey: 'awayCoachId' });
+        Coach.hasMany(models.plot);
       }
     }
   });

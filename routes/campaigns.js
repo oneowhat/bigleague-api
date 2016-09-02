@@ -18,8 +18,8 @@ exports.byTitle = function(req, res, next) {
 			title: req.params.title
 		},
 		include: [
-			{ model: Match },
-			{ model: Coach }
+			{ model: models.round, include: [models.match] },
+			{ model: models.coach }
 		]
 	}).then(function(campaign){
 		res.json(campaign.get({ plain: true }));
