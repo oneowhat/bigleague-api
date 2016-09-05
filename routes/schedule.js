@@ -1,4 +1,5 @@
 var models = require('../models');
+var Promise = models.sequelize.Promise;
 
 const DUMMY = -1;
 
@@ -9,10 +10,14 @@ exports.create = function(req, res, next) {
 		.findAll({ where: { campaignId: req.body.campaign }})
 		.then(function(coaches) {
       var rounds = generateSchedule(campaignId, coaches);
+      Promise.all(rounds).then(function() {
+        res.status(201).json({ success: true });
+      });
+      /*
       rounds.forEach(function(round) {
         insertRound(round, next);
       });
-      res.status(201).json({ success: true });
+      */
     });
 }
 
@@ -22,22 +27,25 @@ function insertRound(round, next) {
     .save()
     .then(function(newRound) {
       if(newRound) {
-        newRound.matches = [];
+        var matches = [];
         round.matches.forEach(function(match) {
-          match.roundId = newRound.id;
-          models.match
-            .build(match)
-            .save()
-            .then(function (newMatch) {
-              return true;
-            });
+          matches.push(insertMatch(newRound, match));
+        });
+        return Promise.all(matches).then(function() {
+          return true;
         });
       }
     });
 }
 
-function insertMatches(round, matches) {
-
+function insertMatch(round, match) {
+  match.roundId = round.id;
+  return models.match
+    .build(match)
+    .save()
+    .then(function (newMatch) {
+      return true;
+    });
 }
 
 function generateSchedule(campaignId, coaches) {
@@ -68,7 +76,7 @@ function generateSchedule(campaignId, coaches) {
         }
       }
     }
-    rounds.push(round);
+    rounds.push(insertRound(round));
     pairs.splice(1, 0, pairs.pop()); // permutate for next round
   }
 
