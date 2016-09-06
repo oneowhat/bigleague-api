@@ -10,16 +10,11 @@ exports.forCampaign = function(req, res, next) {
 		});
 };
 
-exports.byName = function(req, res, next) {
+exports.byId = function(req, res, next) {
 	models.coach
-		.findOne({
-			where: {
-				campaignId: req.params.campaign,
-				name: req.params.name
-			}
-		})
+		.findById(req.params.id, { include: [{ model: models.plot }] })
 		.then(function(coach) {
-    	res.json(coach);
+    	res.json(coach.get({ plain: true }));
 		});
 };
 
