@@ -13,11 +13,6 @@ exports.create = function(req, res, next) {
       Promise.all(rounds).then(function() {
         res.status(201).json({ success: true });
       });
-      /*
-      rounds.forEach(function(round) {
-        insertRound(round, next);
-      });
-      */
     });
 }
 
@@ -83,11 +78,11 @@ function generateSchedule(campaignId, coaches) {
   return rounds;
 }
 
-function newMatch(coachOne, coachTwo, campaignId) {
+function newMatch(homeCoachId, awayCoachId, campaignId) {
   return {
     campaignId: campaignId,
-    homeCoachId: coachOne,
-    awayCoachId: coachTwo,
+    homeCoachId: homeCoachId,
+    awayCoachId: awayCoachId,
     homeScore: 0,
     awayScore: 0,
     roundId: 0
