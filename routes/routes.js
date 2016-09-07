@@ -2,6 +2,7 @@ var	users = require('./users');
 var	campaigns = require('./campaigns');
 var	coaches = require('./coaches');
 var	schedule = require('./schedule');
+var	matches = require('./matches');
 
 exports.init = function(app) {
 
@@ -20,6 +21,8 @@ exports.init = function(app) {
 
   // schedule creator
   app.post('/api/schedule', schedule.create);
+
+  app.put('/api/matches', matches.update);
 
   // users
   app.post('/register', users.register);
