@@ -44,7 +44,8 @@ exports.update = function(req, res, next) {
 		.update({
 			title: request.title,
 			location: request.location,
-			passPhrase: request.passPhrase
+			passPhrase: request.passPhrase,
+			round: request.round
 		}, {
 			where: { id: request.id }
 		})
