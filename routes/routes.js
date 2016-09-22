@@ -3,6 +3,7 @@ var	campaigns = require('./campaigns');
 var	coaches = require('./coaches');
 var	schedule = require('./schedule');
 var	matches = require('./matches');
+var	finalizer = require('./finalizer');
 
 exports.init = function(app) {
 
@@ -11,7 +12,7 @@ exports.init = function(app) {
   app.get('/api/campaign/:title', campaigns.byTitle);
   app.put('/api/campaigns', campaigns.update);
   app.post('/api/campaigns', campaigns.insert);
-
+  app.post('/api/campaign/finalize', finalizer.do);
 
   // players
   app.get('/api/coaches/:campaign', coaches.forCampaign);
@@ -22,6 +23,7 @@ exports.init = function(app) {
   // schedule creator
   app.post('/api/schedule', schedule.create);
 
+  // matches
   app.put('/api/matches', matches.update);
 
   // users

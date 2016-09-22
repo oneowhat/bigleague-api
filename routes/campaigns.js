@@ -21,8 +21,19 @@ exports.byTitle = function(req, res, next) {
 			{ model: models.round, include: [models.match] },
 			{ model: models.coach }
 		]
-	}).then(function(campaign){
-		res.json(campaign.get({ plain: true }));
+	}).then(function(campaign) {
+		campaign.get({ plain: true });
+		campaign.rounds = campaign.rounds.sort(function(a, b) {
+      if (a.roundNumber > b.roundNumber) {
+        return 1;
+      }
+      if (a.roundNumber < b.roundNumber) {
+        return -1;
+      }
+
+      return 0;
+    });
+		res.json(campaign);
 	});
 };
 
