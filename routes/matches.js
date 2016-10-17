@@ -4,8 +4,8 @@ exports.update = function (req, res, next) {
   var now = new Date();
   models.match
     .update({
-      homeScore: req.body.homeScore,
-      awayScore: req.body.awayScore,
+      homeScore: parseInt(req.body.homeScore),
+      awayScore: parseInt(req.body.awayScore),
       reportedAt: now
     }, {
       where: { id: req.body.id }
