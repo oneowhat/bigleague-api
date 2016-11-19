@@ -24,6 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         Match.belongsTo(models.coach);
         Match.belongsTo(models.round);
+        Match.hasMany(models.matchResult);
       }
     }
   });

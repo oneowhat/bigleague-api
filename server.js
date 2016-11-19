@@ -28,6 +28,6 @@ app.use(express.static(__dirname + '/public'));
 
 routes.init(app);
 
-models.sequelize.sync().then(function() {
+//models.sequelize.sync().then(function() {
   app.listen(process.env.PORT || 3000);
-});
+//});

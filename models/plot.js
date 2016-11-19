@@ -9,13 +9,25 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
+    season: {
+      type: Sequelize.INTEGER
+    },
     title: {
       type: Sequelize.STRING
+    },
+    type: {
+      type: Sequelize.STRING
+    },
+    rarity: {
+      type: Sequelize.STRING
+    },
+    availability: {
+      type: Sequelize.INTEGER
     }
   }, {
     classMethods: {
       associate: function(models) {
-        Plot.belongsTo(models.coach);
+        Plot.belongsTo(models.guild);
       }
     }
   });

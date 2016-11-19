@@ -15,9 +15,6 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: Sequelize.STRING
     },
-    guild: {
-      type: Sequelize.STRING
-    },
     campaignPoints: {
       type: Sequelize.INTEGER
     },
@@ -33,7 +30,8 @@ module.exports = function(sequelize, DataTypes) {
         Coach.belongsTo(models.campaign);
         Coach.hasMany(models.match, { as: 'homeCoach', foreignKey: 'homeCoachId' });
         Coach.hasMany(models.match, { as: 'awayCoach', foreignKey: 'awayCoachId' });
-        Coach.hasMany(models.plot);
+        Coach.hasMany(models.coachPlot);
+        Coach.belongsTo(models.guild);
       }
     }
   });
