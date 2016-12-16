@@ -12,6 +12,8 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: Sequelize.STRING
     }
+  }, {
+    timestamps: false
   });
 
   return Position;

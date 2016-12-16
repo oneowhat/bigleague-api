@@ -1,3 +1,4 @@
+var guilds = require('./guilds');
 var	users = require('./users');
 var	campaigns = require('./campaigns');
 var	coaches = require('./coaches');
@@ -6,6 +7,9 @@ var	matches = require('./matches');
 var	finalizer = require('./finalizer');
 
 exports.init = function(app) {
+
+  // guilds
+  app.get('/api/guilds'), guilds.all);
 
   // campaigns
   app.get('/api/campaigns/:userId', campaigns.byUser);

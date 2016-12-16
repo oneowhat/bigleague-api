@@ -16,6 +16,7 @@ module.exports = function(sequelize, DataTypes) {
       type: Sequelize.BOOLEAN
     }
   }, {
+    timestamps: false,
     classMethods: {
       associate: function(models) {
         Guild.hasMany(models.player);

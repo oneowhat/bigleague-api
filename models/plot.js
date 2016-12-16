@@ -25,6 +25,7 @@ module.exports = function(sequelize, DataTypes) {
       type: Sequelize.INTEGER
     }
   }, {
+    timestamps: false,
     classMethods: {
       associate: function(models) {
         Plot.belongsTo(models.guild);

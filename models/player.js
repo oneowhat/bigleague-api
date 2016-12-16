@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes) {
       type: Sequelize.STRING
     }
   }, {
+    timestamps: false,
     classMethods: {
       associate: function(models) {
         Player.belongsTo(models.guild);
