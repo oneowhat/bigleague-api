@@ -3,7 +3,9 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.bulkInsert('position', [
-      { name: "Midas", guildId: 1, positionId: 1 },
+      { name: "Captain" },
+      { name: "Mascot" },
+      { name: "Player" }
     ], {});
   },
 
