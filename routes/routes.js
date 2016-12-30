@@ -1,10 +1,10 @@
 var guilds = require('./guilds');
 var users = require('./users');
-var	campaigns = require('./campaigns');
-var	coaches = require('./coaches');
-var	schedule = require('./schedule');
-var	matches = require('./matches');
-var	finalizer = require('./finalizer');
+var campaigns = require('./campaigns');
+var coaches = require('./coaches');
+var schedule = require('./schedule');
+var matches = require('./matches');
+var finalizer = require('./finalizer');
 
 exports.init = function(app) {
 
