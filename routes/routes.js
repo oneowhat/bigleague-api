@@ -10,6 +10,7 @@ exports.init = function(app) {
 
   // guilds
   app.get('/api/guilds', guilds.all);
+  app.get('/api/guild/:id', guilds.byId);
 
   // campaigns
   app.get('/api/campaigns/:userId', campaigns.byUser);
