@@ -9,7 +9,7 @@ var finalizer = require('./finalizer');
 exports.init = function(app) {
 
   // guilds
-  app.get('/api/guilds'), guilds.all);
+  app.get('/api/guilds', guilds.all);
 
   // campaigns
   app.get('/api/campaigns/:userId', campaigns.byUser);

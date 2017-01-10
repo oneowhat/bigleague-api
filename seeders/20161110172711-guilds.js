@@ -2,7 +2,7 @@
 
 module.exports = {
   up: function (queryInterface, Sequelize) {
-    return queryInterface.bulkInsert('guild', [
+    return queryInterface.bulkInsert('guilds', [
       { name: "Alchemist's", active: true },
       { name: "Brewer's", active: true },
       { name: "Butcher's", active: true },
@@ -17,6 +17,6 @@ module.exports = {
   },
 
   down: function (queryInterface, Sequelize) {
-    return queryInterface.bulkDelete('guild', null, {});
+    return queryInterface.bulkDelete('guilds', null, {});
   }
 };
