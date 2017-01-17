@@ -3,7 +3,7 @@
 var Sequelize = require("sequelize");
 
 module.exports = function(sequelize, DataTypes) {
-  var Coach = sequelize.define('coach', {
+  var Coach = sequelize.define('coachRequest', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
@@ -18,24 +18,22 @@ module.exports = function(sequelize, DataTypes) {
     name: {
       type: Sequelize.STRING
     },
-    campaignPoints: {
+    firstChoiceGuildId: {
       type: Sequelize.INTEGER
     },
-    leaguePoints: {
+    secondChoiceGuildId: {
       type: Sequelize.INTEGER
     },
-    favours: {
+    thirdChoiceGuildId: {
       type: Sequelize.INTEGER
+    },
+    paid: {
+      type: Sequelize.BOOLEAN
     }
   }, {
     classMethods: {
       associate: function(models) {
         Coach.belongsTo(models.campaign);
-        Coach.hasMany(models.match, { as: 'homeCoach', foreignKey: 'homeCoachId' });
-        Coach.hasMany(models.match, { as: 'awayCoach', foreignKey: 'awayCoachId' });
-        Coach.hasMany(models.coachPlot);
-        Coach.belongsTo(models.guild);
-        Coach.belongsTo(models.coachRequest);
       }
     }
   });
