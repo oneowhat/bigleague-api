@@ -1,11 +1,19 @@
 var models = require('../models');
 
 exports.byUser = function(req, res, next) {
+	var lastCreateDate = new Date(-8640000000000000);
 	models.campaign.findAll({
 		where: {
 			userId: req.params.userId
-		}
-	}).then(function(campaigns){
+		},
+		order: [['createdAt', 'DESC']]
+	}).then(function(campaigns) {
+		campaigns.forEach(function(campaign) {
+			if(campaign.createdAt > lastCreateDate && campaign.endedAt != null) {
+				campaign.current = true;
+				lastCreateDate = campaign.createdAt;
+			}
+		});
 		res.json(campaigns.map(function(item) {
 			return item.get({ plain: true });
 		}));

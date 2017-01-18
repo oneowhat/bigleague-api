@@ -20,6 +20,10 @@ module.exports = function(sequelize, DataTypes) {
     },
     round: {
       type: Sequelize.INTEGER
+    },
+    endedAt: {
+      type: Sequelize.DATE,
+      defaultValue: null
     }
   }, {
     classMethods: {

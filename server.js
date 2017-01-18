@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var env = process.env.NODE_ENV || "development";
 var config = require('./config/config')[env];
-var expressJWT = require('express-jwt');
+var jwt = require('express-jwt');
 var routes = require('./routes/routes');
 var models = require("./models");
 
@@ -16,8 +16,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(expressJWT({ secret: config.secret })
-  .unless({ path: ['/login', '/register'] })
+app.use('/api', jwt({ secret: config.secret })
+  .unless({ path: [/^\/api\/guilds/] })
 );
 
 app.use(bodyParser.urlencoded({
