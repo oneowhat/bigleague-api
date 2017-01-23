@@ -5,7 +5,7 @@
   "author": "Brendan Kendrick <oneowhat@gmail.com>",
   "private": true,
   "scripts": {
-    "api": "node server"
+    "api": "nodemon ./server.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -19,5 +19,7 @@
     "sequelize": "^3.24.1",
     "sequelize-cli": "^2.5.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
 }
